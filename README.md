@@ -1,11 +1,10 @@
 # com.dean.interval-tree
 
-This library provides a colletion of data structures implemented using a
-modular, extensible weight balanaced persistent binary tree:
+This library provides a collection of data structures implemented using a
+modular, extensible, foldable, weight balanaced persistent binary tree:
 ordered-sets, ordered-maps, interval-sets, and interval-maps.
 
 ![tests](https://github.com/dco-dev/interval-tree/actions/workflows/clojure.yml/badge.svg)
-![Clojars Project](https://img.shields.io/clojars/v/com.dean/interval-tree.svg)
 [![Clojars Project](https://img.shields.io/clojars/v/com.dean/interval-tree.svg)](https://clojars.org/com.dean/interval-tree)
 
 ### Usage
@@ -44,7 +43,7 @@ sys    0m4.681s
 ### Inspiration
 
  This is an implementation of a weight-balanced binary interval-tree data
- structure based on the following inspiration:
+ structure inspired by the following:
 
  -  Adams (1992)
      'Implementing Sets Efficiently in a Functional Language'
