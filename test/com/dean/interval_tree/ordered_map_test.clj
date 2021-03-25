@@ -1,4 +1,4 @@
-(ns com.dean.interval-tree.tree-test
+(ns com.dean.interval-tree.ordered-map-test
   (:require [clojure.test                :refer :all]
             [com.dean.interval-tree.tree :refer [ordered-map ordered-map-by]])
   (:import  [java.util UUID]))
@@ -23,7 +23,7 @@
          (-> (ordered-map) (assoc :b "b") (assoc :a "a") (assoc :c "c")
              (dissoc :a))))
   (is (= "c" ((ordered-map {:a "a", :b "b", :c "c", :d "d"}) :c)))
-  (is (= :pershing.util.tree.ordered-map-test/not-found
+  (is (= ::not-found
          ((ordered-map {:a "a", :b "b", :c "c", :d "d"}) :z ::not-found))))
 
 (defn random-entry []
