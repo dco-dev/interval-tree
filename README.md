@@ -6,7 +6,14 @@ ordered-sets, ordered-maps, interval-sets, and interval-maps.
 
 ![tests](https://github.com/dco-dev/interval-tree/actions/workflows/clojure.yml/badge.svg)
 ![Clojars Project](https://img.shields.io/clojars/v/com.dean/interval-tree.svg)
-<https://clojars.org/com.dean/interval-tree>
+[![Clojars Project](https://img.shields.io/clojars/v/com.dean/interval-tree.svg)](https://clojars.org/com.dean/interval-tree)
+
+### Usage
+
+To install, add the following dependency to your project or build file:
+
+```[com.dean/interval-tree "0.1.0"]```
+
 
 ### Testing
 
