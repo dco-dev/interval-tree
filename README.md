@@ -4,13 +4,7 @@ This library provides a colletion of data structures implemented using a
 modular, extensible weight balanaced persistent binary tree:
 ordered-sets, ordered-maps, interval-sets, and interval-maps.
 
-
-![tests](https://github.com/dco-dev/interval-tree/actions/workflows/clojure.yml/badge.svg)
-
-![example workflow](https://github.com/dco-dev/interval-tree/actions/workflows/clojure.yml/badge.svg)
-
-
-### Testing
+### Testing ![tests](https://github.com/dco-dev/interval-tree/actions/workflows/clojure.yml/badge.svg)
 
 Testing is accomplished with the standard `lein test`
 ```
