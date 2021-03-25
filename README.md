@@ -5,7 +5,10 @@ modular, extensible weight balanaced persistent binary tree:
 ordered-sets, ordered-maps, interval-sets, and interval-maps.
 
 
-![tests] https://github.com/dco-dev/interval-tree/actions/workflows/clojure.yml/badge.svg
+![tests](https://github.com/dco-dev/interval-tree/actions/workflows/clojure.yml/badge.svg)
+
+![example workflow](https://github.com/dco-dev/interval-tree/actions/workflows/clojure.yml/badge.svg)
+
 
 ### Testing
 
