@@ -9,10 +9,10 @@
 
   :plugins [[lein-asciidoctor  "0.1.14"]]
 
-  :asciidoc {:sources ["doc/*.adoc"]
-             :to-dir "doc/html"
-             :toc              :left
-             :doctype          :article
-             :format           :html5
-             :extract-css      true
-             :source-highlight true})
+  :asciidoctor {:sources ["doc/*.adoc"]
+                :to-dir "doc/html"
+                :toc              :left
+                :doctype          :article
+                :format           :html5
+                :extract-css      true
+                :source-highlight true})
