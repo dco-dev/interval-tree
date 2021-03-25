@@ -32,12 +32,12 @@ lein test com.dean.interval-tree.ordered-set-test
 
 lein test com.dean.interval-tree.tree-test
 
-Ran 30 tests containing 98206 assertions.
+Ran 30 tests containing 98214 assertions.
 0 failures, 0 errors.
 
-real   5m8.457s
-user   8m32.432s
-sys    0m4.681s
+real     5m34.487s
+user    10m21.397s
+sys      0m5.047s
 ```
 
 ### Inspiration
