@@ -1,1 +1,2 @@
-# com.dean.clojure-interval-tree
+# com.dean.interval-tree
+
