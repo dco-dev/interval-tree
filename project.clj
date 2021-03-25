@@ -17,7 +17,7 @@
                                     :password  :env/clojars_pass
                                     :sign-releases false}]]
 
-  :codox    {:output-dir  "doc/api"
+  :codox    {:output-path  "doc/api"
              :src-dir-uri "https://github.com/dco-dev/interval-tree/blob/master/"
              :src-linenum-anchor-prefix "L"
              :project {:name "com.dean/interval-tree"}}
