@@ -3,7 +3,7 @@
             [clojure.math.combinatorics   :as combo]
             [clojure.set                  :as set]
             [clojure.test                 :refer :all]
-            [com.dean.interval-tree.tree  :refer :all]))
+            [com.dean.interval-tree.core  :refer :all]))
 
 ;; TODO: more coverage
 

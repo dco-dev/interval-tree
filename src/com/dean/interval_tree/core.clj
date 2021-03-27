@@ -1,4 +1,4 @@
-(ns com.dean.interval-tree.tree
+(ns com.dean.interval-tree.core
   (:require [clojure.core.reducers                    :as r]
             [com.dean.interval-tree.tree.interval     :as interval]
             [com.dean.interval-tree.tree.interval-map :refer [->IntervalMap]]

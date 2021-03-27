@@ -1,6 +1,6 @@
 (ns com.dean.interval-tree.interval-set-test
   (:require [clojure.test                :refer :all]
-            [com.dean.interval-tree.tree :refer [interval-set]]))
+            [com.dean.interval-tree.core :refer [interval-set]]))
 
 ;; TODO: more
 

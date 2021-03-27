@@ -1,6 +1,6 @@
 (ns com.dean.interval-tree.interval-map-test
   (:require [clojure.test       :refer :all]
-            [com.dean.interval-tree.tree :refer [interval-map]]))
+            [com.dean.interval-tree.core :refer [interval-map]]))
 
 
 ;; x8:                         +-----+

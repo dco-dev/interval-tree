@@ -1,6 +1,6 @@
 (ns com.dean.interval-tree.ordered-map-test
   (:require [clojure.test                :refer :all]
-            [com.dean.interval-tree.tree :refer [ordered-map ordered-map-by]])
+            [com.dean.interval-tree.core :refer [ordered-map ordered-map-by]])
   (:import  [java.util UUID]))
 
 
