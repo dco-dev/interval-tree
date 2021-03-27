@@ -1,7 +1,7 @@
 # com.dean.interval-tree
 
 This library provides a collection of data structures implemented using a
-modular, extensible, foldable, weight balanaced persistent binary tree:
+modular, extensible, foldable, weight balanced persistent binary tree:
 ordered-sets, ordered-maps, interval-sets, and interval-maps.
 
 ![tests](https://github.com/dco-dev/interval-tree/actions/workflows/clojure.yml/badge.svg)
@@ -12,6 +12,13 @@ ordered-sets, ordered-maps, interval-sets, and interval-maps.
 To install, add the following dependency to your project or build file:
 
 ```[com.dean/interval-tree "0.1.1"]```
+
+and
+
+```clj
+(require '[com.dean.interval-tree.core :as dean])
+```
+
 
 ### Topics
 
@@ -39,7 +46,7 @@ course, and would only need to contain the 8 constituent intervals.
 
 #### Efficient Set Operations
 
-This library implements a diverse collection of efficent set opertions
+This library implements a diverse collection of efficent set operations
 on foldably parallel ordered sets:
 
 ```
@@ -49,12 +56,12 @@ on foldably parallel ordered sets:
   (def s0 (shuffle (range 0 1000000 2)))
   (def s1 (shuffle (range 0 1000000 3)))
 
-  ;;;;;;;; com.dean.interval-tree.core/ordered-set
+  ;;;;;;;; dean/ordered-set
 
   (time (def x (ordered-set foo)))         ;; 500K: "Elapsed time: 564.248517 msecs"
   (time (def y (ordered-set bar)))         ;;   1M: "Elapsed time: 1187.734211 msecs"
 
-  (time (def s (proto/intersection
+  (time (def s (dean/intersection
                  (ordered-set s0)
                  (ordered-set s1))))       ;; 833K: "Elapsed time: 1242.961445 msecs"
 
