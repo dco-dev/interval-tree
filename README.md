@@ -11,7 +11,35 @@ ordered-sets, ordered-maps, interval-sets, and interval-maps.
 
 To install, add the following dependency to your project or build file:
 
-```[com.dean/interval-tree "0.1.0"]```
+```[com.dean/interval-tree "0.1.1"]```
+
+### Topics
+
+#### What is an Interval Map?
+
+Imagine you'd like to associate some value with members of a set of
+intervals over some continuous domain, such as time or real numbers.
+An example of this is shown below. An interval map answers the question,
+which intervals overlap at some point on the domain. At 3.14159, in this
+case, would be `x4` and `x7`.  The interval map is sparse itself, of
+course, and would only need to contain the 8 constituent intervals.
+
+```
+ x8:                         +-----+
+ x7:                   +-----------------------------------+
+ x6:                                                       +
+ x5:                                     +-----------+
+ x4: +-----------------------------+
+ x3:                                                 +-----+
+ x2:                         +-----------------+
+ x1:       +-----------+
+
+     0=====1=====2=====3=====4=====5=====6=====7=====8=====9
+```
+
+#### Efficient Set Operations
+
+
 
 
 ### Testing
@@ -97,4 +125,4 @@ sys      0m5.047s
 
 ### License
 
-The use and distribution terms for this software are covered by the [Eclipse Public License 1.0](http://opensource.org/licenses/eclipse-1.0.php), which can be found in the file EPL10.txt at the root of this distribution. By using this software in any fashion, you are agreeing to be bound by the terms of this license. You must not remove this notice, or any other, from this software.
+The use and distribution terms for this software are covered by the [Eclipse Public License 1.0](http://opensource.org/licenses/eclipse-1.0.php), which can be found in the file LICENSE.txt at the root of this distribution. By using this software in any fashion, you are agreeing to be bound by the terms of this license. You must not remove this notice, or any other, from this software.
