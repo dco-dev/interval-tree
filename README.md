@@ -24,8 +24,8 @@ and
 
 #### What is an Interval Map?
 
-Imagine you'd like to associate some value with members of a set of
-intervals over some continuous domain, such as time or real numbers.
+Imagine you'd like to associate values with members of a set of
+intervals over some continuous domain such as time or real numbers.
 An example of this is shown below. An interval map answers the question,
 which intervals overlap at some point on the domain. At 3.14159, in this
 case, would be `x4` and `x7`.  The interval map is sparse itself, of
