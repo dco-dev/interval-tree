@@ -39,8 +39,38 @@ course, and would only need to contain the 8 constituent intervals.
 
 #### Efficient Set Operations
 
+This library implements a diverse collection of efficent set opertions
+on foldably parallel ordered sets:
 
+```
+  (def foo (shuffle (range 500000)))
+  (def bar (shuffle (range 1000000)))
 
+  (def s0 (shuffle (range 0 1000000 2)))
+  (def s1 (shuffle (range 0 1000000 3)))
+
+  ;;;;;;;; com.dean.interval-tree.core/ordered-set
+
+  (time (def x (ordered-set foo)))         ;; 500K: "Elapsed time: 564.248517 msecs"
+  (time (def y (ordered-set bar)))         ;;   1M: "Elapsed time: 1187.734211 msecs"
+
+  (time (def s (proto/intersection
+                 (ordered-set s0)
+                 (ordered-set s1))))       ;; 833K: "Elapsed time: 1242.961445 msecs"
+
+  (time (r/fold + + y))                    ;;   1M: "Elapsed time: 54.363545 msecs"
+
+  ;;;;;;;; clojure.core/sorted-set:
+
+  (time (def v (into (sorted-set) foo)))   ;; 500K: "Elapsed time: 839.188189 msecs"
+  (time (def w (into (sorted-set) bar)))   ;;   1M: "Elapsed time: 1974.798286 msecs"
+
+  (time (def s (clojure.set/intersection
+                 (into (sorted-set) s0)
+                 (into (sorted-set) s1)))) ;; 833K: "Elapsed time: 1589.786106 msecs"
+
+  (time (r/fold + + w))                    ;;   1M: "Elapsed time: 167.916539 msecs"
+```
 
 ### Testing
 
