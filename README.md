@@ -27,10 +27,8 @@ The public api resides in the top-level `com.dean.interval-tree.core` namespace:
 
 * `(dean/ordered-set   coll)`
 * `(dean/ordered-set-by   pred coll)`
-
 * `(dean/ordered-map   coll)`
 * `(dean/ordered-map-by   pred coll)`
-
 * `(dean/interval-set  coll)`
 * `(dean/interval-map  coll)`
 
