@@ -186,7 +186,10 @@ Collections are a special type of OrderedCollection.
 
 The heart of the library is our [persistent tree](https://github.com/dco-dev/interval-tree/blob/master/src/com/dean/interval_tree/tree/tree.clj).
 
-This species of binary tree supports reporesentations of sets, maps,
+The code is well documented and explains in more detail the efficiencies
+of the internal collection operators.
+
+This species of binary tree supports representations of sets, maps,
 and vectors.  In addition to indexed key and range query, it
 supports the `nth` operation to return nth node from the beginning of
 the ordered tree, and `node-rank` to return the rank (sequential
