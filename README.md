@@ -71,13 +71,17 @@ This library implements a diverse collection of efficent set operations
 on foldably parallel ordered sets:
 
 ```
+;; randomized sets of integers
+
   (def foo (shuffle (range 500000)))
   (def bar (shuffle (range 1000000)))
 
   (def s0 (shuffle (range 0 1000000 2)))
   (def s1 (shuffle (range 0 1000000 3)))
 
-  ;;;;;;;; dean/ordered-set
+;;
+;;; dean/ordered-set
+;;
 
   (time (def x (ordered-set foo)))         ;; 500K: "Elapsed time: 564.248517 msecs"
   (time (def y (ordered-set bar)))         ;;   1M: "Elapsed time: 1187.734211 msecs"
@@ -88,7 +92,10 @@ on foldably parallel ordered sets:
 
   (time (r/fold + + y))                    ;;   1M: "Elapsed time: 54.363545 msecs"
 
-  ;;;;;;;; clojure.core/sorted-set:
+
+;;
+;;; clojure.core/sorted-set
+;;
 
   (time (def v (into (sorted-set) foo)))   ;; 500K: "Elapsed time: 839.188189 msecs"
   (time (def w (into (sorted-set) bar)))   ;;   1M: "Elapsed time: 1974.798286 msecs"
