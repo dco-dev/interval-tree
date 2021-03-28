@@ -11,7 +11,9 @@ ordered-sets, ordered-maps, interval-sets, and interval-maps.
 
 To install, add the following dependency to your project or build file:
 
-```[com.dean/interval-tree "0.1.1"]```
+```
+[com.dean/interval-tree "0.1.1"]
+```
 
 and
 
@@ -104,6 +106,77 @@ real     5m34.487s
 user    10m21.397s
 sys      0m5.047s
 ```
+
+### Modularity
+
+This data structure library is designed around the following concepts of
+modularity and extensibility.
+
+#### Clojure/Java Interfaces
+
+The top level collections are built on the standard Clojure/Java
+interfaces, so, for example, working with an `ordered-set` is
+identical to working with Clojure's `sorted-set`, using all of the same
+standard collection functions, for the 99% case: meta, nth, seq, rseq,
+assoc(-in), get(-in), invoke, compare, to-array, empty, .indexOf,
+.lastIndexof, size, iterator-seq, first, last, =, count, empty,
+contains, conj. disj, cons, fold, and many old friends will just
+work, using an efficient implementation that takes full advantage of the
+capabilities of our underlying tree index.
+
+#### PExtensibleset
+
+An exception to the above is due to the fact that `clojure.set` does not
+provide interfaces for extensible sets. So, we provide our own
+intersection, union, difference, subset, and superset.  These operators
+work most efficiently on com.dean.interval-tree collections and provide
+support for backward interoperability with clojure (or possibly other)
+set datatypes.
+
+#### Root Container
+
+The individual collection types (ordered-set, ordered-map, interval-set,
+interval-map} are defined by their individual Class (clojure
+`deftype`) of top level container that holds the root of an
+indexed tree.  This container describes the behavior of the underlying
+tree data structure along several architectural dimensions.
+
+##### INodeCollection
+
+The fundamental collection of nodes provides an interface to node
+allocation machinery and to the root contained node.  A variant
+based on persistent (on-disk) storage, fo r example, could be built
+with customizatioins at this layer.
+
+##### IBalancedCollection
+
+For functional balanced trees, provides an interface to the `stitch`
+function that returns a new, properly balanced tree containing one newly
+allocated node adjoined.  The provided algorithm is
+[weight balanced](https://en.wikipedia.org/wiki/Weight-balanced_tree)
+however others may be used. We've experimented with red-black trees,
+in particular, as variants at this layer.
+
+##### IOrderedCollection
+
+Ordered collections define a comparator and predicates to determine the
+underlying algorithmic compatibility of other collections. Interval
+Collections are a special type of OrderedCollection.
+
+#### Tree
+
+The heart of the library is our [persistent tree](https://github.com/dco-dev/interval-tree/blob/master/src/com/dean/interval_tree/tree/tree.clj).
+
+This species of binary tree supports reporesentations of sets, maps,
+and vectors.  In addition to indexed key and range query, it
+supports the `nth` operation to return nth node from the beginning of
+the ordered tree, and `node-rank` to return the rank (sequential
+position) of a given key within the ordered tree, both in logarithmic
+time.
+
+The axes of exstensibility of the tree implemntation
+(`*compare*`,`*n-join*`, `*t-join*`) correspond to the interfaces
+described above.
 
 ### Inspiration
 
