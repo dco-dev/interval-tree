@@ -15,12 +15,24 @@ To install, add the following dependency to your project or build file:
 [com.dean/interval-tree "0.1.1"]
 ```
 
-and
+#### Public API
+
+The public api resides in the top-level `com.dean.interval-tree.core` namespace:
 
 ```clj
 (require '[com.dean.interval-tree.core :as dean])
 ```
 
+#### Constructors
+
+* `(dean/ordered-set   coll)`
+* `(dean/ordered-set-by   pred coll)`
+
+* `(dean/ordered-map   coll)`
+* `(dean/ordered-map-by   pred coll)`
+
+* `(dean/interval-set  coll)`
+* `(dean/interval-map  coll)`
 
 ### Topics
 
@@ -71,8 +83,6 @@ This library implements a diverse collection of efficent set operations
 on foldably parallel ordered sets:
 
 ```
-;; randomized sets of integers
-
   (def foo (shuffle (range 500000)))
   (def bar (shuffle (range 1000000)))
 
