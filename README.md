@@ -46,6 +46,25 @@ course, and would only need to contain the 8 constituent intervals.
      0=====1=====2=====3=====4=====5=====6=====7=====8=====9
 ```
 
+This corresponds to the following example code:
+
+```clj
+
+(def x (dean/interval-map {[1 3] :x1
+                           [4 7] :x2
+                           [8 9] :x3
+                           [0 5] :x4
+                           [6 8] :x5
+                           [9 9] :x6
+                           [3 9] :x7
+                           [4 5] :x8})
+
+(x 3.141592654) ;; =>  [:x4 :x7]
+(get x 9)       ;; =>  [:x7 :x3 :x6]
+(get x 9.00001) ;; =>  nil
+
+```
+
 #### Efficient Set Operations
 
 This library implements a diverse collection of efficent set operations
@@ -180,8 +199,8 @@ described above.
 
 ### Inspiration
 
- This is an implementation of a weight-balanced binary interval-tree data
- structure inspired by the following:
+ This implementation of a weight-balanced binary interval-tree data
+ structure was inspired by the following:
 
  -  Adams (1992)
      'Implementing Sets Efficiently in a Functional Language'
