@@ -23,6 +23,9 @@ The public api resides in the top-level `com.dean.interval-tree.core` namespace:
 (require '[com.dean.interval-tree.core :as dean])
 ```
 
+The basic operation of this library is as a drop-in replacement for
+`clojure.core/sorted-set` amd `clojure.core/sorted-map`.
+
 #### Constructors
 
 * `(dean/ordered-set   coll)`
