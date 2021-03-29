@@ -24,7 +24,7 @@ The public api resides in the top-level `com.dean.interval-tree.core` namespace:
 ```
 
 The basic operation of this library is as a drop-in replacement for
-`clojure.core/sorted-set` amd `clojure.core/sorted-map`.
+`clojure.core/sorted-set` and `clojure.core/sorted-map`.
 
 #### Constructors
 
