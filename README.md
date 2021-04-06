@@ -183,10 +183,11 @@ tree data structure along several architectural dimensions.
 
 ##### INodeCollection
 
+
 The fundamental collection of nodes provides an interface to node
 allocation machinery and to the root contained node.  A variant
-based on persistent (on-disk) storage, fo r example, could be built
-with customizatioins at this layer.
+based on persistent (on-disk) storage, for example, has been built
+with customizations at this layer.
 
 ##### IBalancedCollection
 
