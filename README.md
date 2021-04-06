@@ -70,11 +70,14 @@ This corresponds to the following example code:
                            [6 8] :x5
                            [9 9] :x6
                            [3 9] :x7
-                           [4 5] :x8})
+                           [4 5] :x8}))
 
 (x 3.141592654) ;; =>  [:x4 :x7]
+(x [5 5])       ;; =>  [:x4 :x7 :x8 :x2]
+
 (get x 9)       ;; =>  [:x7 :x3 :x6]
 (get x 9.00001) ;; =>  nil
+(get x [1 4])   ;; =>  [:x4 :x1 :x7 :x8 :x2]
 
 ```
 
