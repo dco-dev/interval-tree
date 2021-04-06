@@ -86,7 +86,7 @@ This corresponds to the following example code:
 This library implements a diverse collection of efficent set operations
 on foldably parallel ordered sets:
 
-```
+```clj
   (def foo (shuffle (range 500000)))
   (def bar (shuffle (range 1000000)))
 
