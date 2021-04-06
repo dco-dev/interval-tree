@@ -12,7 +12,7 @@ ordered-sets, ordered-maps, interval-sets, and interval-maps.
 To install, add the following dependency to your project or build file:
 
 ```
-[com.dean/interval-tree "0.1.1"]
+[com.dean/interval-tree "0.1.2"]
 ```
 
 #### Public API

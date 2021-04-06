@@ -1,4 +1,4 @@
-(defproject com.dean/interval-tree "0.1.1"
+(defproject com.dean/interval-tree "0.1.2"
   :description "Modular, Extensible, Foldable Weight-Balanced Tree"
   :url "http://github.com/dco-dev/interval-tree"
   :license {:name "Eclipse Public License"
