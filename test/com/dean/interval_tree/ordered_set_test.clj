@@ -3,7 +3,7 @@
             [clojure.math.combinatorics   :as combo]
             [clojure.set                  :as set]
             [clojure.test                 :refer :all]
-            [com.dean.interval-tree.tree  :refer :all]))
+            [com.dean.interval-tree.core  :refer :all]))
 
 ;; TODO: more coverage
 
@@ -97,7 +97,7 @@
       (is (every? #(= (this %) (that %)) afew)))))
 
 (deftest foldable-reducible-collection-check
-  (doseq [size  [1 10 100 1000 10000 100000 250000 500000]
+  (doseq [size  [1 10 100 1000 10000 100000 250000 500000 1000000]
           chunk [1 10 100 1000]]
     (let [data (shuffle (range size))
           sum  (reduce + data)
