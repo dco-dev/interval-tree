@@ -5,7 +5,7 @@
             [com.dean.interval-tree.tree.root]
             [com.dean.interval-tree.tree.order    :as order]
             [com.dean.interval-tree.tree.tree     :as tree])
-  (:import  [clojure.lang                RT]
+  (:import  [clojure.lang                RT MapEntry]
             [com.dean.interval_tree.tree.root     INodeCollection
                                          IBalancedCollection
                                          IOrderedCollection
@@ -111,7 +111,7 @@
       (not (empty? (tree/node-find-intervals root k)))))
   (entryAt [this k]
     (with-interval-map this
-      (some->> k (tree/node-find-intervals root) (map node/-kv))))
+      (some->> k (tree/node-find-intervals root) (mapv node/-kv) (MapEntry. k))))
   (assoc [this k v]
     (with-interval-map this
       (IntervalMap. (tree/node-add root (interval/ordered-pair k) v) cmp alloc stitch _meta)))
