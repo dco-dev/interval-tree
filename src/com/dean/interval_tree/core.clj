@@ -93,3 +93,23 @@
              order/*compare* order/normal-compare]
      (->IntervalSet (reduce #(tree/node-add %1 (interval/ordered-pair %2)) (node/leaf) coll)
                      order/*compare* tree/*t-join* nil {}))))
+
+(comment
+
+  (def x (ordered-map {:x 1 :y 2}))   ;; (find x :x) => [:x 1]
+  (def y (ordered-set [1 2 3 4]))
+
+
+
+  (def x (interval-map
+           {[1 3] :x1
+            [4 7] :x2
+            [8 9] :x3
+            [0 5] :x4}))
+
+  (find x 2)     ;; => [2 ([[0 5] :x4] [[1 3] :x1])]
+
+  (find x [1 4]) ;; => [[1 4] ([[0 5] :x4] [[1 3] :x1] [[4 7] :x2])]
+
+
+  )
