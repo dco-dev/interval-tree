@@ -7,6 +7,8 @@
   :dependencies [[org.clojure/clojure "1.11.1"]
                  [org.clojure/math.combinatorics "0.1.6"]]
 
+  :profiles {:dev {:dependencies [[org.clojure/test.check "1.1.1"]]}}
+
   :plugins [[lein-asciidoctor  "0.1.17"]
             [lein-codox "0.10.8"]]
 

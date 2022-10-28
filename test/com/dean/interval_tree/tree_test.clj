@@ -1,7 +1,10 @@
 (ns com.dean.interval-tree.tree-test
   (:require [clojure.test :refer :all]
             [com.dean.interval-tree.tree.node :as node]
-            [com.dean.interval-tree.tree.tree :as tree]))
+            [com.dean.interval-tree.tree.tree :as tree]
+            [clojure.test.check.clojure-test :refer [defspec]]
+            [clojure.test.check.properties :as prop]
+            [clojure.test.check.generators :as gen]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Fixtures
