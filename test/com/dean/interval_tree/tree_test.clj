@@ -20,25 +20,25 @@
       (matches (node/-l n1) (node/-l n2))
       (matches (node/-r n1) (node/-r n2)))))
 
-(def x1    (tree/node-singleton (gensym) true))
-(def x3    (tree/node-create    (gensym) true x1  x1))
-(def x5    (tree/node-create    (gensym) true x3  x1))
-(def x7    (tree/node-create    (gensym) true x3  x3))
-(def x11   (tree/node-create    (gensym) true x3  x7))
-(def x15   (tree/node-create    (gensym) true x7  x7))
-(def x23   (tree/node-create    (gensym) true x15 x7))
-(def x27   (tree/node-create    (gensym) true x15 x11))
-(def x31   (tree/node-create    (gensym) true x15 x15))
-(def x39   (tree/node-create    (gensym) true x15 x23))
-(def x51   (tree/node-create    (gensym) true x23 x27))
-(def x63   (tree/node-create    (gensym) true x31 x31))
-(def x127  (tree/node-create    (gensym) true x63 x63))
+(def x1 (tree/node-singleton (gensym) true))
+(def x3 (tree/node-create (gensym) true x1 x1))
+(def x5 (tree/node-create (gensym) true x3 x1))
+(def x7 (tree/node-create (gensym) true x3 x3))
+(def x11 (tree/node-create (gensym) true x3 x7))
+(def x15 (tree/node-create (gensym) true x7 x7))
+(def x23 (tree/node-create (gensym) true x15 x7))
+(def x27 (tree/node-create (gensym) true x15 x11))
+(def x31 (tree/node-create (gensym) true x15 x15))
+(def x39 (tree/node-create (gensym) true x15 x23))
+(def x51 (tree/node-create (gensym) true x23 x27))
+(def x63 (tree/node-create (gensym) true x31 x31))
+(def x127 (tree/node-create (gensym) true x63 x63))
 
 ;; TODO: consolidate
 
 (defn- make-integer-tree
-  ([size]           (reduce tree/node-add (node/leaf) (shuffle (range size))))
-  ([start end]      (reduce tree/node-add (node/leaf) (shuffle (range start end))))
+  ([size] (reduce tree/node-add (node/leaf) (shuffle (range size))))
+  ([start end] (reduce tree/node-add (node/leaf) (shuffle (range start end))))
   ([start end step] (reduce tree/node-add (node/leaf) (shuffle (range start end step)))))
 
 (defn- make-string-tree [size]
@@ -49,23 +49,23 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (deftest tree-allocator-check
-  (is (= 0  (tree/node-size   (node/leaf))))
-  (is (= 1  (tree/node-weight (node/leaf))))
-  (is (= 1  (tree/node-size   (tree/node-singleton :k :v))))
-  (is (= 2  (tree/node-weight (tree/node-singleton :k :v))))
-  (is (= 1  (tree/node-size   (tree/node-create :k :v (node/leaf) (node/leaf)))))
-  (is (= 2  (tree/node-weight (tree/node-create :k :v (node/leaf) (node/leaf)))))
-  (is (= 1  (tree/node-size   x1)))
-  (is (= 2  (tree/node-weight x1)))
-  (is (= 3  (tree/node-size   x3)))
-  (is (= 4  (tree/node-weight x3)))
-  (is (= 7  (tree/node-size   x7)))
-  (is (= 8  (tree/node-weight x7)))
-  (is (= 15 (tree/node-size   x15)))
+  (is (= 0 (tree/node-size (node/leaf))))
+  (is (= 1 (tree/node-weight (node/leaf))))
+  (is (= 1 (tree/node-size (tree/node-singleton :k :v))))
+  (is (= 2 (tree/node-weight (tree/node-singleton :k :v))))
+  (is (= 1 (tree/node-size (tree/node-create :k :v (node/leaf) (node/leaf)))))
+  (is (= 2 (tree/node-weight (tree/node-create :k :v (node/leaf) (node/leaf)))))
+  (is (= 1 (tree/node-size x1)))
+  (is (= 2 (tree/node-weight x1)))
+  (is (= 3 (tree/node-size x3)))
+  (is (= 4 (tree/node-weight x3)))
+  (is (= 7 (tree/node-size x7)))
+  (is (= 8 (tree/node-weight x7)))
+  (is (= 15 (tree/node-size x15)))
   (is (= 16 (tree/node-weight x15)))
-  (is (= 31 (tree/node-size   x31)))
+  (is (= 31 (tree/node-size x31)))
   (is (= 32 (tree/node-weight x31)))
-  (is (= 63 (tree/node-size   x63)))
+  (is (= 63 (tree/node-size x63)))
   (is (= 64 (tree/node-weight x63))))
 
 ;; (1 2 4 8 16 32 64 128 256 512 1024 2048 4096 8192 16384 32768
@@ -73,58 +73,58 @@
 
 (deftest tree-health-check
   (doseq [size (take 21 (iterate #(* % 2) 1))]
-    (is (tree/node-healthy? (make-string-tree size)))    ;; string/int tree are structurally
-    (is (tree/node-healthy? (make-integer-tree size))))) ;; very different due to sort order
+    (is (tree/node-healthy? (make-string-tree size)))       ;; string/int tree are structurally
+    (is (tree/node-healthy? (make-integer-tree size)))))    ;; very different due to sort order
 
 (deftest rotation-check:single-left
   (let [node node/->SimpleNode]
     (matches (tree/rotate-single-left :AK :AV
-                  (node :XK :XV (node/leaf) (node/leaf) 1)
-                  (node :BK :BV (node :YK :YV (node/leaf) (node/leaf) 1)
-                                (node :ZK :XZ (node/leaf) (node/leaf) 1) 3))
-             (node :BK :BV
-                  (node :AK :AV (node :XK :XV (node/leaf) (node/leaf) 1)
-                                (node :YK :YV (node/leaf) (node/leaf) 1) 3)
-                  (node :ZK :XZ (node/leaf) (node/leaf) 1) 5))))
+               (node :XK :XV (node/leaf) (node/leaf) 1)
+               (node :BK :BV (node :YK :YV (node/leaf) (node/leaf) 1)
+                 (node :ZK :XZ (node/leaf) (node/leaf) 1) 3))
+      (node :BK :BV
+        (node :AK :AV (node :XK :XV (node/leaf) (node/leaf) 1)
+          (node :YK :YV (node/leaf) (node/leaf) 1) 3)
+        (node :ZK :XZ (node/leaf) (node/leaf) 1) 5))))
 
 (deftest rotation-check:double-left
   (let [node node/->SimpleNode]
     (matches (tree/rotate-double-left :AK :AV
-                 (node :XK :XV (node/leaf) (node/leaf) 1)
-                 (node :CK :CV
-                       (node :BK :BV (node :Y1K :Y1V (node/leaf) (node/leaf) 1)
-                                     (node :Y2K :Y2V (node/leaf) (node/leaf) 1) 3)
-                       (node :ZK :ZV (node/leaf) (node/leaf) 1) 5))
-             (node :BK :BV
-                 (node :AK :AV (node :XK :XV (node/leaf) (node/leaf) 1)
-                               (node :Y1K :Y1V (node/leaf) (node/leaf) 1) 3)
-                 (node :CK :CV
-                       (node :Y2K :Y2V (node/leaf) (node/leaf) 1)
-                       (node :ZK :ZV (node/leaf) (node/leaf) 1) 3) 7))))
+               (node :XK :XV (node/leaf) (node/leaf) 1)
+               (node :CK :CV
+                 (node :BK :BV (node :Y1K :Y1V (node/leaf) (node/leaf) 1)
+                   (node :Y2K :Y2V (node/leaf) (node/leaf) 1) 3)
+                 (node :ZK :ZV (node/leaf) (node/leaf) 1) 5))
+      (node :BK :BV
+        (node :AK :AV (node :XK :XV (node/leaf) (node/leaf) 1)
+          (node :Y1K :Y1V (node/leaf) (node/leaf) 1) 3)
+        (node :CK :CV
+          (node :Y2K :Y2V (node/leaf) (node/leaf) 1)
+          (node :ZK :ZV (node/leaf) (node/leaf) 1) 3) 7))))
 
 (deftest rotation-check:single-right
   (let [node node/->SimpleNode]
     (matches (tree/rotate-single-right :BK :BV
-                 (node :AK :AV (node :XK :XV (node/leaf) (node/leaf) 1)
-                               (node :YK :YV (node/leaf) (node/leaf) 1) 3)
-                 (node :ZK :XZ (node/leaf) (node/leaf) 1))
-             (node :AK :AV
-                 (node :XK :XV (node/leaf) (node/leaf) 1)
-                 (node :BK :BV (node :YK :YV (node/leaf) (node/leaf) 1)
-                               (node :ZK :XZ (node/leaf) (node/leaf) 1) 3) 5))))
+               (node :AK :AV (node :XK :XV (node/leaf) (node/leaf) 1)
+                 (node :YK :YV (node/leaf) (node/leaf) 1) 3)
+               (node :ZK :XZ (node/leaf) (node/leaf) 1))
+      (node :AK :AV
+        (node :XK :XV (node/leaf) (node/leaf) 1)
+        (node :BK :BV (node :YK :YV (node/leaf) (node/leaf) 1)
+          (node :ZK :XZ (node/leaf) (node/leaf) 1) 3) 5))))
 
 (deftest rotation-check:double-right
   (let [node node/->SimpleNode]
     (matches (tree/rotate-double-right :CK :CV
-                 (node :AK :AV (node :XK :XV (node/leaf) (node/leaf) 1)
-                               (node :BK :BV (node :Y1K :Y1V (node/leaf) (node/leaf) 1)
-                                             (node :Y2K :Y2V (node/leaf) (node/leaf) 1) 3) 5)
-                 (node :ZK :ZV (node/leaf) (node/leaf) 1))
-             (node :BK :BV
-                   (node :AK :AV (node :XK :XV (node/leaf) (node/leaf) 1)
-                                 (node :Y1K :Y1V (node/leaf) (node/leaf) 1) 3)
-                   (node :CK :CV (node :Y2K :Y2V (node/leaf) (node/leaf) 1)
-                                 (node :ZK :ZV (node/leaf) (node/leaf) 1) 3) 7))))
+               (node :AK :AV (node :XK :XV (node/leaf) (node/leaf) 1)
+                 (node :BK :BV (node :Y1K :Y1V (node/leaf) (node/leaf) 1)
+                   (node :Y2K :Y2V (node/leaf) (node/leaf) 1) 3) 5)
+               (node :ZK :ZV (node/leaf) (node/leaf) 1))
+      (node :BK :BV
+        (node :AK :AV (node :XK :XV (node/leaf) (node/leaf) 1)
+          (node :Y1K :Y1V (node/leaf) (node/leaf) 1) 3)
+        (node :CK :CV (node :Y2K :Y2V (node/leaf) (node/leaf) 1)
+          (node :ZK :ZV (node/leaf) (node/leaf) 1) 3) 7))))
 
 (deftest join-check:single-left
   (let [rot:1L (tree/node-stitch :root true x1 x7)]
@@ -147,63 +147,63 @@
 (deftest join-check:double-left
   (let [node node/->SimpleNode]
     (matches (tree/node-stitch :AK :AV
-                 (node :XK :XV (node/leaf) (node/leaf) 1)
-                 (node :CK :CV
-                   (node :BK :BV
-                     (node :Y1K :Y1V (node :Q1K :Q1V (node/leaf) (node/leaf) 1) (node/leaf) 2)
-                     (node :Y2K :Y2V (node :Q2K :Q2V (node/leaf) (node/leaf) 1) (node/leaf) 2) 5)
-                   (node :ZK :ZV (node/leaf) (node/leaf) 1) 7))
-        (node :BK :BV
-          (node :AK :AV
-            (node :XK :XV (node/leaf) (node/leaf) 1)
-            (node :Y1K :Y1V (node :Q1K :Q1V (node/leaf) (node/leaf) 1) (node/leaf) 2) 4)
-          (node :CK :CV
-            (node :Y2K :Y2V (node :Q2K :Q2V (node/leaf) (node/leaf) 1) (node/leaf) 2)
-            (node :ZK :ZV (node/leaf) (node/leaf) 1) 4) 9))))
+               (node :XK :XV (node/leaf) (node/leaf) 1)
+               (node :CK :CV
+                 (node :BK :BV
+                   (node :Y1K :Y1V (node :Q1K :Q1V (node/leaf) (node/leaf) 1) (node/leaf) 2)
+                   (node :Y2K :Y2V (node :Q2K :Q2V (node/leaf) (node/leaf) 1) (node/leaf) 2) 5)
+                 (node :ZK :ZV (node/leaf) (node/leaf) 1) 7))
+      (node :BK :BV
+        (node :AK :AV
+          (node :XK :XV (node/leaf) (node/leaf) 1)
+          (node :Y1K :Y1V (node :Q1K :Q1V (node/leaf) (node/leaf) 1) (node/leaf) 2) 4)
+        (node :CK :CV
+          (node :Y2K :Y2V (node :Q2K :Q2V (node/leaf) (node/leaf) 1) (node/leaf) 2)
+          (node :ZK :ZV (node/leaf) (node/leaf) 1) 4) 9))))
 
 (deftest join-check:double-right
   (let [node node/->SimpleNode]
     (matches (tree/node-stitch :CK :CV
-                 (node :AK :AV
-                   (node :XK :XV (node/leaf) (node/leaf) 1)
-                   (node :BK :BV
-                     (node :Y1K :Y1V (node :Q1K :Q1V (node/leaf) (node/leaf) 1) (node/leaf) 2)
-                     (node :Y2K :Y2V (node :Q2K :Q2V (node/leaf) (node/leaf) 1) (node/leaf) 2) 5) 7)
-                 (node :ZK :ZV (node/leaf) (node/leaf) 1))
-        (node :BK :BV
-          (node :AK :AV
-            (node :XK :XV (node/leaf) (node/leaf) 1)
-            (node :Y1K :Y1V (node :Q1K :Q1V (node/leaf) (node/leaf) 1) (node/leaf) 2) 4)
-          (node :CK :CV
-            (node :Y2K :Y2V (node :Q2K :Q2V (node/leaf) (node/leaf) 1) (node/leaf) 2)
-            (node :ZK :ZV (node/leaf) (node/leaf) 1) 4) 9))))
+               (node :AK :AV
+                 (node :XK :XV (node/leaf) (node/leaf) 1)
+                 (node :BK :BV
+                   (node :Y1K :Y1V (node :Q1K :Q1V (node/leaf) (node/leaf) 1) (node/leaf) 2)
+                   (node :Y2K :Y2V (node :Q2K :Q2V (node/leaf) (node/leaf) 1) (node/leaf) 2) 5) 7)
+               (node :ZK :ZV (node/leaf) (node/leaf) 1))
+      (node :BK :BV
+        (node :AK :AV
+          (node :XK :XV (node/leaf) (node/leaf) 1)
+          (node :Y1K :Y1V (node :Q1K :Q1V (node/leaf) (node/leaf) 1) (node/leaf) 2) 4)
+        (node :CK :CV
+          (node :Y2K :Y2V (node :Q2K :Q2V (node/leaf) (node/leaf) 1) (node/leaf) 2)
+          (node :ZK :ZV (node/leaf) (node/leaf) 1) 4) 9))))
 
 (deftest concat3-check
   (is
     (= \A
-       (first
-         (name
-           (node/-k
-             (tree/node-least
-               (tree/node-concat3
-                 (gensym "A") true (node/leaf) x5)))))))
+      (first
+        (name
+          (node/-k
+            (tree/node-least
+              (tree/node-concat3
+                (gensym "A") true (node/leaf) x5)))))))
   (is
     (= \Z
-       (first
-         (name
-           (node/-k
-             (tree/node-greatest
-               (tree/node-concat3
-                 (gensym "Z") true x5 (node/leaf))))))))
+      (first
+        (name
+          (node/-k
+            (tree/node-greatest
+              (tree/node-concat3
+                (gensym "Z") true x5 (node/leaf))))))))
   (is
     (= \A
-       (first
-         (name
-           (node/-k
-             (tree/node-least
-               (tree/node-concat3
-                 (gensym "C") true
-                 (tree/node-singleton (gensym "A") true) x7))))))))
+      (first
+        (name
+          (node/-k
+            (tree/node-least
+              (tree/node-concat3
+                (gensym "C") true
+                (tree/node-singleton (gensym "A") true) x7))))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Operational Tests
@@ -226,11 +226,11 @@
 (deftest extrema-check
   (doseq [size [10 100 1000 10000 100000]]
     (let [tree (make-string-tree size)]
-      (is (= "0"               (-> tree tree/node-least    node/-k)))
+      (is (= "0" (-> tree tree/node-least node/-k)))
       (is (= (-> size dec str) (-> tree tree/node-greatest node/-k)))
       (is (= "1" (-> tree tree/node-remove-least tree/node-least node/-k)))
       (is (= (-> size dec dec str)
-             (-> tree tree/node-remove-greatest tree/node-greatest node/-k))))))
+            (-> tree tree/node-remove-greatest tree/node-greatest node/-k))))))
 
 (deftest node-seq-check
   (doseq [size [1 10 100 1000 10000 100000]]
@@ -271,7 +271,7 @@
 (deftest node-reduction-check
   (doseq [size [1 10 100 1000 10000 100000]]
     (let [tree (make-integer-tree size)
-          sum  (reduce + (range size))]
+          sum (reduce + (range size))]
       (is (= sum (reduce + (map node/-k (tree/node-seq tree)))))
       (dotimes [_ 1000]
         (is (= sum (tree/node-chunked-fold (inc (rand-int size))
@@ -280,14 +280,47 @@
 (deftest node-comparison-check
   (let [nums #(-> % (repeatedly (partial rand-int 1000000000)))
         tree #(->> % nums (reduce tree/node-add (node/leaf)))
-        chk  #(let [m0 (node/-k (tree/node-least %1))
-                    m1 (node/-k (tree/node-least %2))]
-                (is (zero? (tree/node-set-compare %1 %1)))
-                (is (zero? (tree/node-set-compare %2 %2)))
-                (cond
-                  (< m0 m1) (is (= -1 (tree/node-set-compare %1 %2)))
-                  (< m1 m0) (is (= 1 (tree/node-set-compare %1 %2)))
-                  true      (recur (tree/node-remove-least %1)
-                                   (tree/node-remove-least %2))))]
+        chk #(let [m0 (node/-k (tree/node-least %1))
+                   m1 (node/-k (tree/node-least %2))]
+               (is (zero? (tree/node-set-compare %1 %1)))
+               (is (zero? (tree/node-set-compare %2 %2)))
+               (cond
+                 (< m0 m1) (is (= -1 (tree/node-set-compare %1 %2)))
+                 (< m1 m0) (is (= 1 (tree/node-set-compare %1 %2)))
+                 true (recur (tree/node-remove-least %1)
+                        (tree/node-remove-least %2))))]
     (doseq [size [1 10 100 1000 10000 100000]]
       (chk (tree size) (tree size)))))
+
+(defspec add-remove-node-maintains-health
+  (prop/for-all [k gen/small-integer
+                 size gen/nat]
+    ;; +1 to prevent removing nodes from empty trees
+    (let [tree (make-integer-tree (+ 1 size))]
+      (and
+        (tree/node-healthy? (tree/node-add tree k))
+        (tree/node-healthy? (tree/node-remove-least tree))
+        (tree/node-healthy? (tree/node-remove-greatest tree))
+        (tree/node-healthy? (->> tree tree/node-random node/-k (tree/node-remove tree)))))))
+
+
+  (comment
+    (def t-small (make-integer-tree 2))
+    (gen/sample gen/small-integer 30)
+    (def t (make-integer-tree 10))
+    (def ts (make-string-tree 10))
+    (tree/node-size t)
+    (tree/node-size (tree/node-add t 33))
+    (tree/node-size (tree/node-add (node/leaf) 5))
+    (tree/node-size t)
+
+    (let [tree (make-integer-tree size)]
+      (def tree (make-integer-tree 15))
+      (def k 4)
+      (tree/node-healthy? (tree/node-add tree k))
+      (tree/node-healthy? (tree/node-remove-greatest tree))
+      (tree/node-healthy? (tree/node-remove-least tree))
+      (tree/node-healthy? (tree/node-remove-greatest tree))
+      (tree/node-healthy? (->> tree tree/node-random node/-k (tree/node-remove tree))))
+
+    )
