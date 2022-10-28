@@ -786,6 +786,10 @@
       (throw (ex-info "index out of range" {:i index :max (node-size n)}))
       (srch n (long index)))))
 
+(defn node-random [n]
+  "Returns a random node from tree rooted at n. (Logarithmic Time)"
+  (->> n node-size rand-int (node-nth n)))
+
 (defn node-rank
   "Return the rank (sequential position) of a given KEY within the
   ordered tree rooted at n. (Logarithmic Time)"
