@@ -5,7 +5,7 @@
 ;; Comparator
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; TODO: note about fanciness
+;; Normalize allows the faster `case` to be used. When using `compare` on strings, values can be outside of +/- 1`
 
 (defn normalize ^long [^long x]
   (if (zero? x)
