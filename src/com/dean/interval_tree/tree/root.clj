@@ -8,7 +8,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (definterface INodeCollection
-  (getAllocator     [] "Return a fuction that allocates a new node of this colletion")
+  (getAllocator     [] "Return a function that allocates a new node of this collection")
   (getRoot          [] "Return a 'root' node as appropriate for the given collection"))
 
 (definterface IBalancedCollection
@@ -17,9 +17,9 @@
                         are functions of the implementation of stitch."))
 
 (definterface IOrderedCollection
-  (getCmp           []      "Return a three-way comparator that defintes a total order
+  (getCmp           []      "Return a three-way comparator that defines a total order
                              over all items in the collection")
-  (isCompatible     [other] "Return `true` if `other` collection is algoritmically compatible")
+  (isCompatible     [other] "Return `true` if `other` collection is algorithmically compatible")
   (isSimilar        [other] "Return `true` if `other` is algorithmically identical"))
 
 (definterface IIntervalCollection)
