@@ -33,6 +33,7 @@
 ;;     STOC '72 Proceedings
 ;;     4th Annual ACM symposium on Theory of Computing
 ;;     Pages 137-142
+;;     <https://dl.acm.org/doi/abs/10.1145/800152.804906>
 ;;
 ;; --  Driscoll, Sarnak, Sleator, and Tarjan (1989)
 ;;     'Making Data Structures Persistent'
