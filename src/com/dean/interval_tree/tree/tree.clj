@@ -15,7 +15,7 @@
 ;; --  Adams (1992)
 ;;     'Implementing Sets Efficiently in a Functional Language'
 ;;     Technical Report CSTR 92-10, University of Southampton.
-;;     <http://groups.csail.mit.edu/mac/users/adams/BB/92-10.ps>
+;;     <http://groups.csail.mit.edu/mac/users/adams/BB/92-10.ps> TODO  FIND CORRECT LINK
 ;;
 ;; --  Hirai and Yamamoto (2011)
 ;;     'Balancing Weight-Balanced Trees'
@@ -26,23 +26,26 @@
 ;; --  Oleg Kiselyov
 ;;     'Towards the best collection API, A design of the overall optimal
 ;;     collection traversal interface'
-;;     <http://pobox.com/~oleg/ftp/papers/LL3-collections-enumerators.txt>
+;;     <https://okmij.org/ftp/papers/LL3-collections-enumerators.txt>
 ;;
 ;; --  Nievergelt and Reingold (1972)
 ;;     'Binary Search Trees of Bounded Balance'
 ;;     STOC '72 Proceedings
 ;;     4th Annual ACM symposium on Theory of Computing
 ;;     Pages 137-142
+;;     <https://dl.acm.org/doi/abs/10.1145/800152.804906>
 ;;
 ;; --  Driscoll, Sarnak, Sleator, and Tarjan (1989)
 ;;     'Making Data Structures Persistent'
 ;;     Journal of Computer and System Sciences Volume 38 Issue 1, February 1989
 ;;     18th Annual ACM Symposium on Theory of Computing
 ;;     Pages 86-124
+;;    <https://www.sciencedirect.com/science/article/pii/0022000089900342>
 ;;
 ;; --  MIT Scheme weight balanced tree as reimplemented by Yoichi Hirai
 ;;     and Kazuhiko Yamamoto using the revised non-variant algorithm recommended
 ;;     integer balance parameters from (Hirai/Yamomoto 2011).
+;;    <https://www.cambridge.org/core/journals/journal-of-functional-programming/article/balancing-weightbalanced-trees/7281C4DE7E56B74F2D13F06E31DCBC5B>
 ;;
 ;; --  Wikipedia
 ;;     'Interval Tree'
@@ -166,7 +169,7 @@
 
 ;; TODO: describe in more detail "enumerator" concept
 ;; TODO: diagram of left partial tree decomposition
-;; TODO: use a simple triple type rather than persistentlist
+;; TODO: use a simple triple type rather than persistent list
 
 (defn node-enumerator
   "Efficient mechanism to accomplish partial enumeration of
@@ -178,6 +181,7 @@
      (if (leaf? n)
        enum
        (kvlr [k v l r] n
+
          (recur l (list n r enum))))))
 
 ;; TODO: diagram of right partial tree decomposition
@@ -212,7 +216,7 @@
   "Perform a single left rotation, moving Y, the left subtree of the
   right subtree of A, into the left subtree (shown below).  This must
   occur in order to restore proper balance when the weight of the left
-  subtree of node A is less then the weight of the right subtree of
+  subtree of node A is less than the weight of the right subtree of
   node A multiplied by rotation coefficient +delta+ and the weight of
   the left subtree of node B is less than the weight of the right subtree
   of node B multiplied by rotation coefficient +gamma+
@@ -236,7 +240,7 @@
   "Perform a double left rotation, moving Y1, the left subtree of the
   left subtree of the right subtree of A, into the left subtree (shown
   below).  This must occur in order to restore proper balance when the
-  weight of the left subtree of node A is less then the weight of the
+  weight of the left subtree of node A is less than the weight of the
   right subtree of node A multiplied by rotation coefficient +delta+
   and the weight of the left subtree of node B is greater than or equal
   to the weight of the right subtree of node B multiplied by rotation
@@ -265,7 +269,7 @@
   "Perform a single right rotation, moving Y, the right subtree of the
   left subtree of B, into the right subtree (shown below).  This must
   occur in order to restore proper balance when the weight of the right
-  subtree of node B is less then the weight of the left subtree of
+  subtree of node B is less than the weight of the left subtree of
   node B multiplied by rotation coefficient +delta+ and the weight of the
   right subtree of node A is less than the weight of the left subtree
   of node A multiplied by rotation coefficient +gamma+.
@@ -288,7 +292,7 @@
   "Perform a double right rotation, moving Y2, the right subtree of
   the right subtree of the left subtree of C, into the right
   subtree (shown below).  This must occur in order to restore proper
-  balance when the weight of the right subtree of node C is less then
+  balance when the weight of the right subtree of node C is less than
   the weight of the left subtree of node C multiplied by rotation
   coefficient +delta+ and the weight of the right subtree of node B
   is greater than or equal to the weight of the left subtree of node B
@@ -551,7 +555,7 @@
   ([f n] (node-fold-right f nil n))
   ([f base n] ((node-fold-fn :>) f base n)))
 
-;; MAYBE: i'm not convinced these are necessary
+;; MAYBE: I'm not convinced these are necessary
 
 (defn- node-fold*-fn [dir]
   (let [iter-fn (case dir
@@ -653,8 +657,8 @@
 
 (defn node-compare
   "return 3-way comparison of the trees n1 and n2 using an accessor
-  to compare specific node consitituent values: :k, :v, :kv, or any
-  user-specifed function.  Default, when not specified, to the
+  to compare specific node constituent values: :k, :v, :kv, or any
+  user-specified function.  Default, when not specified, to the
   entire node structure. return-value semantics:
    -1  -> n1 is LESS-THAN    n2
     0  -> n1 is EQUAL-TO     n2
@@ -786,6 +790,10 @@
       (throw (ex-info "index out of range" {:i index :max (node-size n)}))
       (srch n (long index)))))
 
+(defn node-random [n]
+  "Returns a random node from tree rooted at n. (Logarithmic Time)"
+  (->> n node-size rand-int (node-nth n)))
+
 (defn node-rank
   "Return the rank (sequential position) of a given KEY within the
   ordered tree rooted at n. (Logarithmic Time)"
@@ -810,8 +818,8 @@
 (defn node-vec
   "Eagerly return a vector of all nodes in tree rooted at n in
   the specified order, optionally using an accessor to extract
-  specific node consitituent values: :k, :v, :kv, or any
-  user-specifed function.  Default, when not specified, to the
+  specific node constituent values: :k, :v, :kv, or any
+  user-specified function.  Default, when not specified, to the
   entire node structure."
   [n & {:keys [accessor reverse?]}]
   (let [acc   (transient [])
@@ -859,7 +867,7 @@
        true (->> from (node-split-nth n) node-seq (take cnt))))))
 
 (defn node-chunked-fold
-  "Parallel chunked fold mechansim to suport clojure.core.reducers/CollFold"
+  "Parallel chunked fold mechanism to support clojure.core.reducers/CollFold"
   [^long i n combinef reducef]
   {:pre [(pos? i)]}
   (let [offsets (vec (range 0 (node-size n) i))

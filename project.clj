@@ -4,11 +4,13 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
-  :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.clojure/math.combinatorics "0.1.4"]]
+  :dependencies [[org.clojure/clojure "1.11.1"]
+                 [org.clojure/math.combinatorics "0.1.6"]]
 
-  :plugins [[lein-asciidoctor  "0.1.14"]
-            [lein-codox "0.10.7"]]
+  :profiles {:dev {:dependencies [[org.clojure/test.check "1.1.1"]]}}
+
+  :plugins [[lein-asciidoctor  "0.1.17"]
+            [lein-codox "0.10.8"]]
 
   :signing  {:gpg-key "3A2F2AA9"}
 

@@ -1,7 +1,10 @@
 (ns com.dean.interval-tree.tree-test
   (:require [clojure.test :refer :all]
             [com.dean.interval-tree.tree.node :as node]
-            [com.dean.interval-tree.tree.tree :as tree]))
+            [com.dean.interval-tree.tree.tree :as tree]
+            [clojure.test.check.clojure-test :refer [defspec]]
+            [clojure.test.check.properties :as prop]
+            [clojure.test.check.generators :as gen]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Fixtures
@@ -288,3 +291,37 @@
                                    (tree/node-remove-least %2))))]
     (doseq [size [1 10 100 1000 10000 100000]]
       (chk (tree size) (tree size)))))
+
+
+(defspec add-remove-node-maintains-health
+  (prop/for-all [k gen/small-integer
+                 size gen/nat]
+    ;; +1 to prevent removing nodes from empty trees
+    (let [tree (make-integer-tree (+ 1 size))]
+      (and
+        (tree/node-healthy? (tree/node-add tree k))
+        (tree/node-healthy? (tree/node-remove-least tree))
+        (tree/node-healthy? (tree/node-remove-greatest tree))
+        (tree/node-healthy? (->> tree tree/node-random node/-k (tree/node-remove tree)))))))
+
+
+  (comment
+    (def t-small (make-integer-tree 2))
+    (gen/sample gen/small-integer 30)
+    (def t (make-integer-tree 10))
+    (def ts (make-string-tree 10))
+    (tree/node-size t)
+    (tree/node-size (tree/node-add t 33))
+    (tree/node-size (tree/node-add (node/leaf) 5))
+    (tree/node-size t)
+
+    (let [tree (make-integer-tree size)]
+      (def tree (make-integer-tree 15))
+      (def k 4)
+      (tree/node-healthy? (tree/node-add tree k))
+      (tree/node-healthy? (tree/node-remove-greatest tree))
+      (tree/node-healthy? (tree/node-remove-least tree))
+      (tree/node-healthy? (tree/node-remove-greatest tree))
+      (tree/node-healthy? (->> tree tree/node-random node/-k (tree/node-remove tree))))
+
+    )

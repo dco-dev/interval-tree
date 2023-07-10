@@ -6,7 +6,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; It can sometimes be the case that "leaf" nodes aren't a static value,
-;; but computed/generated/populated in some way. so i usually make `leaf`
+;; but computed/generated/populated in some way. so I usually make `leaf`
 ;; a function rather than value just as a matter of practice in order to
 ;; have a complete abstraction layer between node and tree layers.
 
@@ -67,7 +67,7 @@
   (kv [_] (MapEntry. k v)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Constitutent Accessors
+;; Constituent Accessors
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; @gunnarson style
